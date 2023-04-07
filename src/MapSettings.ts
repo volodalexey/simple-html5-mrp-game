@@ -71,8 +71,7 @@ export interface IMapSettings {
 export abstract class MapSettings {
   static options = {
     tilesPerRow: 16,
-    cell: 64,
-    tileId: 292
+    cell: 64
   }
 
   static findTileLayer ({ name, mapSettings }: { name: string, mapSettings: IMapSettings }): ITileLayer {
@@ -92,18 +91,19 @@ export abstract class MapSettings {
   }
 
   static mapTileToPositions ({
-    mapSettings, layerName
+    mapSettings, layerName, tileIds
   }: {
     mapSettings: IMapSettings
     layerName: string
+    tileIds: number[]
   }): IPointData[] {
     const positions: IPointData[] = []
-    const { tilesPerRow, cell, tileId } = MapSettings.options
+    const { tilesPerRow, cell } = MapSettings.options
     const tileLayer = MapSettings.findTileLayer({ name: layerName, mapSettings })
     for (let i = 0; i < tileLayer.data.length; i += tilesPerRow) {
       const row = tileLayer.data.slice(i, i + tilesPerRow)
       row.forEach((symbol, j) => {
-        if (symbol === tileId) {
+        if (tileIds.includes(symbol)) {
           positions.push({ x: j * cell, y: i / tilesPerRow * cell })
         }
       })

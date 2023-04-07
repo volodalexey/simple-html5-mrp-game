@@ -21,14 +21,16 @@ export class Level extends Sprite {
 
     this.texture = background
 
-    const collisionPoints = MapSettings.mapTileToPositions({ mapSettings: settings, layerName: 'Collisions' })
+    const collisionPoints = MapSettings.mapTileToPositions({
+      mapSettings: settings, layerName: 'Collisions', tileIds: [292, 250]
+    })
 
     const playerAndDoorLayer = MapSettings.findObjectGroupLayer({ name: 'Player and Door', mapSettings: settings })
-    const playerObject = playerAndDoorLayer.objects.find(o => o.gid === 292)
+    const playerObject = playerAndDoorLayer.objects.find(o => [250, 292].includes(o.gid))
     if (playerObject == null) {
       throw new Error('Unable to find initial player position')
     }
-    const doorObject = playerAndDoorLayer.objects.find(o => o.gid === 290)
+    const doorObject = playerAndDoorLayer.objects.find(o => [290, 248].includes(o.gid))
     if (doorObject == null) {
       throw new Error('Unable to find initial door position')
     }

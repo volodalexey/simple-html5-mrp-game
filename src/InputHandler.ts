@@ -149,11 +149,16 @@ export class InputHandler {
         } else if (y >= bounds.bottom) {
           this.pointerYDown = 1
         }
+        if (bounds.left < x && x < bounds.right &&
+          bounds.top < y && y < bounds.bottom) {
+          // jump when pointer inside hitbox
+          this.pointerYDown = -1
+        }
       } else {
         this.pointerXDown = x
         this.pointerYDown = y
       }
-      logInputDirection(`MOVE|START px=${this.pointerXDown} py=${this.pointerYDown}`)
+      logInputDirection(`MOVE|START px=${this.pointerXDown} py=${this.pointerYDown} rt=${Boolean(relativeToTarget)}`)
     } else if (pressed === false) {
       this.pointerXDown = null
       this.pointerYDown = null

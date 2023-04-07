@@ -7,6 +7,7 @@ import { InputHandler } from './InputHandler'
 import { EPlayerState } from './playerStates'
 import { CollisionBlock } from './CollisionBlock'
 import { MapSettings } from './MapSettings'
+import { Door } from './Door'
 
 export interface IGameOptions {
   viewWidth: number
@@ -35,16 +36,21 @@ export class Game extends Container {
   public statusBar!: StatusBar
   public startModal!: StartModal
   public collisionBlocks = new Container<CollisionBlock>()
+  public doors = new Container<Door>()
   constructor (options: IGameOptions) {
     super()
+
+    Door.texturesCache = options.textures.doopOpenTextures
 
     this.setup(options)
 
     this.addEventLesteners()
 
-    this.player.setState(EPlayerState.idleRight)
-
     this.runLevel()
+
+    setTimeout(() => {
+      void this.level.idleLoad().catch(console.error)
+    }, 2000)
   }
 
   setup ({
@@ -61,12 +67,13 @@ export class Game extends Container {
     this.statusBar = new StatusBar()
     this.addChild(this.statusBar)
 
+    this.addChild(this.collisionBlocks)
+    this.addChild(this.doors)
+
     this.player = new Player({ game: this, textures: kingTextures })
     this.addChild(this.player)
 
     this.inputHandler = new InputHandler({ eventTarget: this, relativeToTarget: this.player })
-
-    this.addChild(this.collisionBlocks)
 
     this.startModal = new StartModal({ viewWidth, viewHeight })
     this.startModal.visible = false
@@ -80,6 +87,9 @@ export class Game extends Container {
   cleanFromAll (): void {
     while (this.collisionBlocks.children[0] != null) {
       this.collisionBlocks.children[0].removeFromParent()
+    }
+    while (this.doors.children[0] != null) {
+      this.doors.children[0].removeFromParent()
     }
   }
 
@@ -122,8 +132,15 @@ export class Game extends Container {
     this.player.handleUpdate(deltaMS)
   }
 
-  runLevel (): void {
-    const { collisionPoints, playerPosition } = this.level.initLevel(this.currentLevel)
+  runLevel (increment?: boolean): void {
+    this.cleanFromAll()
+    if (increment === true) {
+      this.currentLevel++
+    }
+    if (this.currentLevel > 3) {
+      this.currentLevel = 1
+    }
+    const { collisionPoints, playerPosition, doorPosition } = this.level.initLevel(this.currentLevel)
 
     collisionPoints.forEach(cp => {
       this.collisionBlocks.addChild(new CollisionBlock({
@@ -134,6 +151,12 @@ export class Game extends Container {
     })
 
     this.player.setPosition(playerPosition)
+    this.player.setState(EPlayerState.idleRight)
+
+    const door = new Door()
+    door.setPosition(doorPosition)
+
+    this.doors.addChild(door)
 
     this.statusBar.updateLevel(this.currentLevel)
   }

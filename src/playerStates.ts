@@ -53,7 +53,9 @@ export class IdleLeft extends PlayerState {
   handleInput (): void {
     const { inputHandler, player } = this.game
     if (inputHandler.hasDirectionUp()) {
-      if (inputHandler.hasDirectionRight()) {
+      if (player.checkDoorsCollision()) {
+        player.setState(EPlayerState.enterDoorLeft)
+      } else if (inputHandler.hasDirectionRight()) {
         player.setState(EPlayerState.jumpRight)
       } else {
         player.setState(EPlayerState.jumpLeft)
@@ -79,7 +81,9 @@ export class IdleRight extends PlayerState {
   handleInput (): void {
     const { inputHandler, player } = this.game
     if (inputHandler.hasDirectionUp()) {
-      if (inputHandler.hasDirectionLeft()) {
+      if (player.checkDoorsCollision()) {
+        player.setState(EPlayerState.enterDoorRight)
+      } else if (inputHandler.hasDirectionLeft()) {
         player.setState(EPlayerState.jumpLeft)
       } else {
         player.setState(EPlayerState.jumpRight)
@@ -230,6 +234,8 @@ export class EnterDoorLeft extends PlayerState {
   enter (): void {
     const { player } = this.game
     player.switchAnimation(PlayerAnimation.enterDoorLeft)
+    player.velocity.vx = 0
+    player.velocity.vy = 0
   }
 
   handleInput (): void {
@@ -245,6 +251,8 @@ export class EnterDoorRight extends PlayerState {
   enter (): void {
     const { player } = this.game
     player.switchAnimation(PlayerAnimation.enterDoorRight)
+    player.velocity.vx = 0
+    player.velocity.vy = 0
   }
 
   handleInput (): void {

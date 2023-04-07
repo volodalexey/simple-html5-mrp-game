@@ -22,8 +22,8 @@ export const manifest: ResolverManifest = {
     {
       name: 'level-3-bundle',
       assets: {
-        level2Background: 'assets/levels/Level-3.png',
-        level2Settings: 'assets/levels/Level-3-settings.json'
+        level3Background: 'assets/levels/Level-3.png',
+        level3Settings: 'assets/levels/Level-3-settings.json'
       }
     }
   ]
@@ -82,6 +82,8 @@ export class LoaderScene extends Container implements IScene {
 
   async initializeLoader (): Promise<void> {
     await Assets.init({ manifest })
+
+    console.log('manifest.bundles[0].name', manifest.bundles[0].name)
 
     await Assets.loadBundle(manifest.bundles[0].name, this.downloadProgress)
   }

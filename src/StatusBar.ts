@@ -3,9 +3,9 @@ import { Container, Text } from 'pixi.js'
 export class StatusBar extends Container {
   static options = {
     padding: 20,
-    textColor: 0x000000,
-    textColorShadow: 0xffffff,
-    textShadowOffset: 1,
+    textColor: 0xbb5857,
+    textColorShadow: 0x98cbd8,
+    textShadowOffset: 0.5,
     textSize: 20
   }
 
@@ -53,14 +53,15 @@ export class StatusBar extends Container {
     this.addChild(levelText)
     this.levelText = levelText
 
-    const timeTextShadow = new Text('Time: 0.0', {
+    const timeTextShadow = new Text(StatusBar.getTimeText(0), {
       fontSize: textSize * 0.8,
       fill: textColorShadow
     })
     timeTextShadow.position.set(levelTextShadow.x, levelTextShadow.y + levelTextShadow.height)
+    timeTextShadow.alpha = 1
     this.addChild(timeTextShadow)
     this.timeTextShadow = timeTextShadow
-    const timeText = new Text('Time: 0.0', {
+    const timeText = new Text(StatusBar.getTimeText(0), {
       fontSize: textSize * 0.8,
       fill: textColor
     })

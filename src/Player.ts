@@ -208,18 +208,26 @@ export class Player extends Container {
     this.velocity.vy = 0
   }
 
+  isEnteringDoorState (): boolean {
+    return [this.states[EPlayerState.enterDoorLeft], this.states[EPlayerState.enterDoorRight]].includes(this.currentState)
+  }
+
   handleUpdate (deltaMS: number): void {
     const { inputHandler } = this.game
 
-    this.currentState.handleInput()
-    if (inputHandler.hasDirectionLeft()) {
-      this.velocity.vx = -Player.options.moveSpeed
-    } else if (inputHandler.hasDirectionRight()) {
-      this.velocity.vx = Player.options.moveSpeed
-    } else {
-      this.velocity.vx = 0
+    const isEnterDoor = this.isEnteringDoorState()
+
+    if (!isEnterDoor) {
+      this.currentState.handleInput()
+      if (inputHandler.hasDirectionLeft()) {
+        this.velocity.vx = -Player.options.moveSpeed
+      } else if (inputHandler.hasDirectionRight()) {
+        this.velocity.vx = Player.options.moveSpeed
+      } else {
+        this.velocity.vx = 0
+      }
+      this.x += this.velocity.vx
     }
-    this.x += this.velocity.vx
 
     this.checkForHorizontalCollisions()
     this.applyGravity()
@@ -232,6 +240,9 @@ export class Player extends Container {
         this.currentAnimation.currentFrame++
       } else {
         this.currentAnimation.currentFrame = 0
+      }
+      if (isEnterDoor && this.currentAnimation.currentFrame < this.currentAnimation.totalFrames - 1) {
+        this.game.runLevel(true)
       }
     } else {
       this.frameTimer += deltaMS
@@ -334,5 +345,27 @@ export class Player extends Container {
       bottom: this.hitbox.position.y + this.hitbox.height,
       left: this.hitbox.position.x
     }
+  }
+
+  checkDoorsCollision (): boolean {
+    this.updateHitbox()
+    const playerBounds = this.getHitboxBounds()
+    return this.game.doors.children.some(door => {
+      const doorBounds = door.getRectBounds()
+      if (
+        playerBounds.right <= doorBounds.right &&
+          playerBounds.left >= doorBounds.left &&
+          playerBounds.bottom >= doorBounds.top &&
+          playerBounds.top <= doorBounds.bottom
+      ) {
+        if (this.currentState === this.states[EPlayerState.idleLeft]) {
+          this.setState(EPlayerState.enterDoorLeft)
+        } else {
+          this.setState(EPlayerState.enterDoorRight)
+        }
+        return true
+      }
+      return false
+    })
   }
 }
