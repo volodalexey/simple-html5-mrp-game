@@ -91,14 +91,4 @@ export class StartModal extends Container {
       this.emit('click', e)
     })
   }
-
-  handleResize ({ scaleX, scaleY, viewWidth, viewHeight }: {
-    scaleX: number
-    scaleY: number
-    viewWidth: number
-    viewHeight: number
-  }): void {
-    // this.scale.set(this.cityBackground.scale.x, this.cityBackground.scale.y)
-    this.position.set(viewWidth / 2 / scaleX - this.width / 2, viewHeight / 2 / scaleY - this.height / 2)
-  }
 }

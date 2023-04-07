@@ -8,6 +8,7 @@ import { EPlayerState } from './playerStates'
 import { CollisionBlock } from './CollisionBlock'
 import { MapSettings } from './MapSettings'
 import { Door } from './Door'
+import { logLayout } from './logger'
 
 export interface IGameOptions {
   viewWidth: number
@@ -25,7 +26,7 @@ export class Game extends Container {
 
   static options = {
     startLevel: 1,
-    maxTime: 50000
+    maxTime: 20000
   }
 
   public currentLevel = Game.options.startLevel
@@ -66,6 +67,7 @@ export class Game extends Container {
 
     this.statusBar = new StatusBar()
     this.addChild(this.statusBar)
+    this.statusBar.position.set(viewWidth / 2 - this.statusBar.width / 2, 0)
 
     this.addChild(this.collisionBlocks)
     this.addChild(this.doors)
@@ -108,16 +110,43 @@ export class Game extends Container {
     this.gameEnded = true
     this.player.stop()
     this.startModal.visible = true
-    const success = this.currentLevel === 3
+    const success = this.currentLevel > 3
     this.startModal.reasonText.text = success ? 'Win!!' : 'Time out!'
   }
 
-  handleResize (options: {
+  handleResize ({ viewWidth, viewHeight }: {
     viewWidth: number
     viewHeight: number
   }): void {
-    // this.scale.set(options.viewHeight / this.cityBackground.bgHeight)
-    this.startModal.handleResize({ scaleX: this.scale.x, scaleY: this.scale.y, ...options })
+    const availableWidth = viewWidth
+    const availableHeight = viewHeight
+    const totalWidth = this.level.width
+    const totalHeight = this.level.height
+    let scale = 1
+    if (totalHeight >= totalWidth) {
+      scale = availableHeight / totalHeight
+      if (scale * totalWidth > availableWidth) {
+        scale = availableWidth / totalWidth
+      }
+      logLayout(`By height (sc=${scale})`)
+    } else {
+      scale = availableWidth / totalWidth
+      logLayout(`By width (sc=${scale})`)
+      if (scale * totalHeight > availableHeight) {
+        scale = availableHeight / totalHeight
+      }
+    }
+    const occupiedWidth = Math.floor(totalWidth * scale)
+    const occupiedHeight = Math.floor(totalHeight * scale)
+    const x = availableWidth > occupiedWidth ? (availableWidth - occupiedWidth) / 2 : 0
+    const y = availableHeight > occupiedHeight ? (availableHeight - occupiedHeight) / 2 : 0
+    logLayout(`aw=${availableWidth} (ow=${occupiedWidth}) x=${x} ah=${availableHeight} (oh=${occupiedHeight}) y=${y}`)
+    this.x = x
+    this.width = occupiedWidth
+    this.y = y
+    this.height = occupiedHeight
+    logLayout(`x=${x} y=${y} w=${this.width} h=${this.height}`)
+    this.startModal.position.set(this.level.width / 2 - this.startModal.width / 2, this.level.height / 2 - this.startModal.height / 2)
   }
 
   handleUpdate (deltaMS: number): void {
@@ -133,13 +162,14 @@ export class Game extends Container {
   }
 
   runLevel (increment?: boolean): void {
-    this.cleanFromAll()
     if (increment === true) {
       this.currentLevel++
     }
     if (this.currentLevel > 3) {
-      this.currentLevel = 1
+      this.endGame()
+      return
     }
+    this.cleanFromAll()
     const { collisionPoints, playerPosition, doorPosition } = this.level.initLevel(this.currentLevel)
 
     collisionPoints.forEach(cp => {
