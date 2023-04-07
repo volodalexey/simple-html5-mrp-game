@@ -1,0 +1,336 @@
+{
+  "meta": {
+    "version": "0.6.7"
+  },
+  "savePath": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture",
+  "images": [
+    {
+      "name": "Box.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Box.png",
+      "folder": ""
+    },
+    {
+      "name": "Door-Open-0.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Door-Open-0.png",
+      "folder": ""
+    },
+    {
+      "name": "Door-Open-1.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Door-Open-1.png",
+      "folder": ""
+    },
+    {
+      "name": "Door-Open-2.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Door-Open-2.png",
+      "folder": ""
+    },
+    {
+      "name": "Door-Open-3.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Door-Open-3.png",
+      "folder": ""
+    },
+    {
+      "name": "Door-Open-4.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/Door-Open-4.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-0.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-0.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-1.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-1.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-2.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-2.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-3.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-3.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-4.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-4.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-5.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-5.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-6.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-6.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Left-7.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Left-7.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-0.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-0.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-1.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-1.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-2.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-2.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-3.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-3.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-4.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-4.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-5.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-5.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-6.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-6.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Enter-Door-Right-7.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Enter-Door-Right-7.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-00.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-00.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-01.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-01.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-02.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-02.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-03.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-03.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-04.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-04.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-05.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-05.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-06.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-06.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-07.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-07.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-08.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-08.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-09.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-09.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Left-10.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Left-10.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-00.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-00.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-01.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-01.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-02.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-02.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-03.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-03.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-04.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-04.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-05.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-05.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-06.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-06.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-07.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-07.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-08.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-08.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-09.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-09.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Idle-Right-10.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Idle-Right-10.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-0.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-0.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-1.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-1.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-2.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-2.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-3.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-3.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-4.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-4.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-5.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-5.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-6.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-6.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Left-7.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Left-7.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-0.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-0.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-1.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-1.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-2.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-2.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-3.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-3.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-4.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-4.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-5.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-5.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-6.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-6.png",
+      "folder": ""
+    },
+    {
+      "name": "King-Run-Right-7.png",
+      "path": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture/King-Run-Right-7.png",
+      "folder": ""
+    }
+  ],
+  "folders": [],
+  "packOptions": {
+    "textureName": "spritesheet",
+    "textureFormat": "png",
+    "removeFileExtension": false,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "/mnt/mystorage/js_projects/simple-html5-mrp-game/src-texture",
+    "width": 2048,
+    "height": 2048,
+    "fixedSize": false,
+    "powerOfTwo": false,
+    "padding": 1,
+    "extrude": 0,
+    "allowRotation": false,
+    "allowTrim": true,
+    "trimMode": "trim",
+    "alphaThreshold": "0",
+    "detectIdentical": true,
+    "packer": "MaxRectsPacker",
+    "packerMethod": "Smart"
+  }
+}
