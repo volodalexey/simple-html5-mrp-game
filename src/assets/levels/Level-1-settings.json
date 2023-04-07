@@ -85,7 +85,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"Boxes and Door",
+         "name":"Misc",
          "objects":[
                 {
                  "class":"",
@@ -133,27 +133,50 @@
                  "width":0,
                  "x":376.247,
                  "y":604.412
-                }, 
-                {
-                 "class":"",
-                 "gid":290,
-                 "height":112,
-                 "id":29,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":92,
-                 "x":754,
-                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":6,
+         "name":"Player and Door",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":292,
+                 "height":64,
+                 "id":30,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":142,
+                 "y":270
+                }, 
+                {
+                 "class":"",
+                 "gid":290,
+                 "height":112,
+                 "id":33,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":92,
+                 "x":750,
+                 "y":384
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":30,
+ "nextlayerid":7,
+ "nextobjectid":34,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

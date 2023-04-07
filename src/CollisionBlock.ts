@@ -1,14 +1,19 @@
-import { Sprite, type Texture } from 'pixi.js'
+import { Graphics } from 'pixi.js'
+import { logCollisionBlock } from './logger'
 
 interface ICollisionBlockOptions {
   initX: number
   initY: number
-  texture?: Texture
+  cell: number
 }
 
-export class CollisionBlock extends Sprite {
-  constructor ({ initX, initY, texture }: ICollisionBlockOptions) {
-    super(texture)
+export class CollisionBlock extends Graphics {
+  constructor ({ initX, initY, cell }: ICollisionBlockOptions) {
+    super()
+    this.beginFill(0xff0000)
+    this.drawRect(0, 0, cell, cell)
+    this.endFill()
+    this.alpha = logCollisionBlock.enabled ? 0.5 : 0
     this.position.set(initX, initY)
   }
 

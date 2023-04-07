@@ -8,7 +8,8 @@ import {
   type PlayerState, EPlayerState
 } from './playerStates'
 import { type Game } from './Game'
-import { logPlayerState } from './logger'
+import { logPlayerBounds, logPlayerState } from './logger'
+import { type CollisionBlock } from './CollisionBlock'
 
 export interface IPlayerOptions {
   game: Game
@@ -37,6 +38,19 @@ export class Player extends Container {
     vy: 0
   }
 
+  public hitbox = {
+    position: {
+      x: 0,
+      y: 0
+    },
+    offset: {
+      x: 4,
+      y: 4
+    },
+    width: 50,
+    height: 53
+  }
+
   public frameTimer = 0
 
   static fps = 20
@@ -59,11 +73,28 @@ export class Player extends Container {
   public currentAnimation!: AnimatedSprite
   spritesContainer!: Container<AnimatedSprite>
   public playerBox!: Graphics
+  public groundBlock?: CollisionBlock
 
   constructor (options: IPlayerOptions) {
     super()
     this.game = options.game
     this.setup(options)
+    this.updateHitbox()
+    if (logPlayerBounds.enabled) {
+      const graphics = new Graphics()
+      graphics.beginFill(0xff00ff)
+      graphics.drawRect(0, 0, this.width, this.height)
+      graphics.endFill()
+      graphics.alpha = 0.5
+      this.addChild(graphics)
+
+      const hitboxGraphics = new Graphics()
+      hitboxGraphics.beginFill(0x00ffff)
+      hitboxGraphics.drawRect(this.hitbox.position.x, this.hitbox.position.y, this.hitbox.width, this.hitbox.height)
+      hitboxGraphics.endFill()
+      hitboxGraphics.alpha = 0.5
+      this.addChild(hitboxGraphics)
+    }
 
     this.states = {
       [EPlayerState.idleLeft]: new IdleLeft({ game: options.game }),
@@ -165,7 +196,7 @@ export class Player extends Container {
   }
 
   isOnGround (): boolean {
-    return true
+    return Boolean(this.groundBlock)
   }
 
   isFalling (): boolean {
@@ -178,12 +209,9 @@ export class Player extends Container {
   }
 
   handleUpdate (deltaMS: number): void {
-    this.checkCollision()
-    this.currentState.handleInput()
-
     const { inputHandler } = this.game
-    // HORIZONTAL MOVEMENT
-    this.x += this.velocity.vx
+
+    this.currentState.handleInput()
     if (inputHandler.hasDirectionLeft()) {
       this.velocity.vx = -Player.options.moveSpeed
     } else if (inputHandler.hasDirectionRight()) {
@@ -191,14 +219,11 @@ export class Player extends Container {
     } else {
       this.velocity.vx = 0
     }
+    this.x += this.velocity.vx
 
-    // VERTICAL MOVEMENT
-    this.y += this.velocity.vy
-    if (!this.isOnGround()) {
-      this.velocity.vy += Player.options.gravity
-    } else {
-      this.velocity.vy = 0
-    }
+    this.checkForHorizontalCollisions()
+    this.applyGravity()
+    this.checkForVerticalCollisions()
 
     // SPRITE ANIMATION
     if (this.frameTimer > Player.options.frameInterval) {
@@ -219,16 +244,95 @@ export class Player extends Container {
     this.setState(EPlayerState.idleRight)
   }
 
-  checkCollision (): void {
-    this.game.collisionBlocks.children.forEach((collisionBlock) => {
+  checkForHorizontalCollisions (): void {
+    this.updateHitbox()
+    const playerBounds = this.getHitboxBounds()
+
+    for (let i = 0; i < this.game.collisionBlocks.children.length; i++) {
+      const collisionBlock = this.game.collisionBlocks.children[i]
+      const blockBounds = collisionBlock.getRectBounds()
+
       if (
-        collisionBlock.x < this.x + this.width &&
-        collisionBlock.x + collisionBlock.width > this.x &&
-        collisionBlock.y < this.y + this.height &&
-        collisionBlock.y + collisionBlock.height > this.y
+        playerBounds.left <= blockBounds.right &&
+        playerBounds.right >= blockBounds.left &&
+        playerBounds.bottom >= blockBounds.top &&
+        playerBounds.top <= blockBounds.bottom
       ) {
-        console.log('Collision')
+        if (this.velocity.vx < 0) {
+          this.setPosition({ x: blockBounds.right + 1 })
+          break
+        }
+
+        if (this.velocity.vx > 0) {
+          this.setPosition({ x: blockBounds.left - this.hitbox.width - 1 })
+          break
+        }
       }
-    })
+    }
+  }
+
+  checkForVerticalCollisions (): void {
+    this.updateHitbox()
+    const playerBounds = this.getHitboxBounds()
+    this.groundBlock = undefined
+    for (let i = 0; i < this.game.collisionBlocks.children.length; i++) {
+      const collisionBlock = this.game.collisionBlocks.children[i]
+      const blockBounds = collisionBlock.getRectBounds()
+
+      if (
+        playerBounds.left <= blockBounds.right &&
+        playerBounds.right >= blockBounds.left &&
+        playerBounds.bottom >= blockBounds.top &&
+        playerBounds.top <= blockBounds.bottom
+      ) {
+        if (this.velocity.vy < 0) {
+          this.velocity.vy = 0
+          this.setPosition({ y: blockBounds.bottom + 1 })
+          break
+        }
+
+        if (this.velocity.vy > 0) {
+          this.velocity.vy = 0
+          this.groundBlock = collisionBlock
+          this.setPosition({ y: blockBounds.top - this.hitbox.height - 1 })
+          break
+        }
+      }
+    }
+  }
+
+  applyGravity (): void {
+    this.velocity.vy += Player.options.gravity
+    this.position.y += this.velocity.vy
+  }
+
+  updateHitbox (): void {
+    const { position, offset, width, height } = this.hitbox
+    position.x = this.position.x + (this.width - width) / 2 + offset.x
+    position.y = this.position.y + (this.height - height) / 2 + offset.y
+  }
+
+  setPosition ({ x, y }: { x?: number, y?: number }): void {
+    this.updateHitbox()
+    if (x != null) {
+      this.position.x = x + (this.position.x - this.hitbox.position.x)
+    }
+    if (y != null) {
+      this.position.y = y + (this.position.y - this.hitbox.position.y)
+    }
+  }
+
+  getHitboxBounds (): {
+    top: number
+    right: number
+    bottom: number
+    left: number
+  } {
+    return {
+      top: this.hitbox.position.y,
+      right: this.hitbox.position.x + this.hitbox.width,
+      bottom: this.hitbox.position.y + this.hitbox.height,
+      left: this.hitbox.position.x
+    }
   }
 }

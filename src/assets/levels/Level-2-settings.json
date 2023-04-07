@@ -63,29 +63,6 @@
          "y":0
         }, 
         {
-         "draworder":"topdown",
-         "id":3,
-         "name":"Boxes and Door",
-         "objects":[
-                {
-                 "class":"",
-                 "gid":290,
-                 "height":112,
-                 "id":11,
-                 "name":"",
-                 "rotation":0,
-                 "visible":true,
-                 "width":92,
-                 "x":754,
-                 "y":448
-                }],
-         "opacity":1,
-         "type":"objectgroup",
-         "visible":true,
-         "x":0,
-         "y":0
-        }, 
-        {
          "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 273, 274, 0, 0, 256, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 280, 281, 0, 0, 263, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -104,9 +81,55 @@
          "width":16,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":3,
+         "name":"Misc",
+         "objects":[],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":7,
+         "name":"Player and Door",
+         "objects":[
+                {
+                 "class":"",
+                 "gid":292,
+                 "height":64,
+                 "id":12,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":64,
+                 "x":88,
+                 "y":149.333
+                }, 
+                {
+                 "class":"",
+                 "gid":290,
+                 "height":112,
+                 "id":13,
+                 "name":"",
+                 "rotation":0,
+                 "visible":true,
+                 "width":92,
+                 "x":754,
+                 "y":448
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":false,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":7,
- "nextobjectid":12,
+ "nextlayerid":8,
+ "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",

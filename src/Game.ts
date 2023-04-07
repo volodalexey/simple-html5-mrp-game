@@ -5,7 +5,8 @@ import { StatusBar } from './StatusBar'
 import { StartModal } from './StartModal'
 import { InputHandler } from './InputHandler'
 import { EPlayerState } from './playerStates'
-import { type CollisionBlock } from './CollisionBlock'
+import { CollisionBlock } from './CollisionBlock'
+import { MapSettings } from './MapSettings'
 
 export interface IGameOptions {
   viewWidth: number
@@ -42,6 +43,8 @@ export class Game extends Container {
     this.addEventLesteners()
 
     this.player.setState(EPlayerState.idleRight)
+
+    this.runLevel()
   }
 
   setup ({
@@ -83,11 +86,12 @@ export class Game extends Container {
   startGame = (): void => {
     this.startModal.visible = false
     this.gameEnded = false
+    this.time = 0
     this.player.restart()
     this.inputHandler.restart()
     this.currentLevel = Game.options.startLevel
-    this.statusBar.updateLevel(this.currentLevel)
     this.cleanFromAll()
+    this.runLevel()
   }
 
   endGame (): void {
@@ -116,5 +120,21 @@ export class Game extends Container {
       this.endGame()
     }
     this.player.handleUpdate(deltaMS)
+  }
+
+  runLevel (): void {
+    const { collisionPoints, playerPosition } = this.level.initLevel(this.currentLevel)
+
+    collisionPoints.forEach(cp => {
+      this.collisionBlocks.addChild(new CollisionBlock({
+        initX: cp.x,
+        initY: cp.y,
+        cell: MapSettings.options.cell
+      }))
+    })
+
+    this.player.setPosition(playerPosition)
+
+    this.statusBar.updateLevel(this.currentLevel)
   }
 }

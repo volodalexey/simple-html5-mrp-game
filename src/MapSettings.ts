@@ -33,6 +33,7 @@ export interface IObject {
   class: string
   height: number
   id: number
+  gid: number
   name: string
   polyline: IPolylinePoint[]
   rotation: number
@@ -69,8 +70,9 @@ export interface IMapSettings {
 
 export abstract class MapSettings {
   static options = {
-    tilesPerRow: 20,
-    cell: 64
+    tilesPerRow: 16,
+    cell: 64,
+    tileId: 292
   }
 
   static findTileLayer ({ name, mapSettings }: { name: string, mapSettings: IMapSettings }): ITileLayer {
@@ -96,12 +98,12 @@ export abstract class MapSettings {
     layerName: string
   }): IPointData[] {
     const positions: IPointData[] = []
-    const { tilesPerRow, cell } = MapSettings.options
+    const { tilesPerRow, cell, tileId } = MapSettings.options
     const tileLayer = MapSettings.findTileLayer({ name: layerName, mapSettings })
     for (let i = 0; i < tileLayer.data.length; i += tilesPerRow) {
       const row = tileLayer.data.slice(i, i + tilesPerRow)
       row.forEach((symbol, j) => {
-        if (symbol === 14) {
+        if (symbol === tileId) {
           positions.push({ x: j * cell, y: i / tilesPerRow * cell })
         }
       })

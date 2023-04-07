@@ -1,4 +1,4 @@
-import { Assets, Sprite, type Texture } from 'pixi.js'
+import { Assets, type IPointData, Sprite, type Texture } from 'pixi.js'
 import { manifest } from './LoaderScene'
 import { MapSettings, type IMapSettings } from './MapSettings'
 
@@ -11,12 +11,32 @@ export class Level extends Sprite {
       }))
   }
 
-  initLevel (levelIndex: number, layerName = 'Collisions'): ReturnType<typeof MapSettings['mapTileToPositions']> {
+  initLevel (levelIndex: number): {
+    collisionPoints: ReturnType<typeof MapSettings['mapTileToPositions']>
+    playerPosition: IPointData
+    doorPosition: IPointData
+  } {
     const background: Texture = Assets.get(`level${levelIndex}Background`)
     const settings: IMapSettings = Assets.get(`level${levelIndex}Settings`)
 
     this.texture = background
 
-    return MapSettings.mapTileToPositions({ mapSettings: settings, layerName })
+    const collisionPoints = MapSettings.mapTileToPositions({ mapSettings: settings, layerName: 'Collisions' })
+
+    const playerAndDoorLayer = MapSettings.findObjectGroupLayer({ name: 'Player and Door', mapSettings: settings })
+    const playerObject = playerAndDoorLayer.objects.find(o => o.gid === 292)
+    if (playerObject == null) {
+      throw new Error('Unable to find initial player position')
+    }
+    const doorObject = playerAndDoorLayer.objects.find(o => o.gid === 290)
+    if (doorObject == null) {
+      throw new Error('Unable to find initial door position')
+    }
+
+    return {
+      collisionPoints,
+      playerPosition: { x: playerObject.x, y: playerObject.y - playerObject.height },
+      doorPosition: { x: doorObject.x, y: doorObject.y - doorObject.height }
+    }
   }
 }

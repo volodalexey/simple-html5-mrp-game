@@ -11,7 +11,6 @@ interface IInputHandlerOptions {
 export class InputHandler {
   public pointerXDown: number | null = null
   public pointerYDown: number | null = null
-  public pointerSpecial = false
   public eventTarget!: Container
   public relativeToTarget?: Container
   public interactiveChildren!: boolean
@@ -65,9 +64,6 @@ export class InputHandler {
       case 'KeyS':case 'ArrowDown':
         this.applyDownDirection(true)
         break
-      case 'ShiftLeft': case 'ControlLeft': case 'Space':
-        this.pointerSpecial = true
-        break
     }
   }
 
@@ -85,9 +81,6 @@ export class InputHandler {
         break
       case 'KeyS':case 'ArrowDown':
         this.applyDownDirection(false)
-        break
-      case 'ShiftLeft': case 'ControlLeft': case 'Space':
-        this.pointerSpecial = false
         break
     }
   }
@@ -136,10 +129,6 @@ export class InputHandler {
     return this.pointerYDown !== null && this.pointerYDown > 0
   }
 
-  hasSpecial (): boolean {
-    return this.pointerSpecial
-  }
-
   private applyPointerToDirection (pressed: boolean | undefined, x: number, y: number): void {
     const { relativeToTarget } = this
     if (pressed === true || (pressed === undefined && this.isPointerDown())) {
@@ -157,7 +146,6 @@ export class InputHandler {
         }
         if (y <= bounds.top) {
           this.pointerYDown = -1
-          this.pointerSpecial = true
         } else if (y >= bounds.bottom) {
           this.pointerYDown = 1
         }
@@ -169,7 +157,6 @@ export class InputHandler {
     } else if (pressed === false) {
       this.pointerXDown = null
       this.pointerYDown = null
-      this.pointerSpecial = false
       logInputDirection(`END px=${this.pointerXDown} py=${this.pointerYDown}`)
     }
   }
@@ -177,6 +164,5 @@ export class InputHandler {
   restart (): void {
     this.pointerXDown = null
     this.pointerYDown = null
-    this.pointerSpecial = false
   }
 }

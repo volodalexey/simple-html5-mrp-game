@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="30">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="64" tileheight="64" infinite="0" nextlayerid="7" nextobjectid="34">
  <editorsettings>
-  <export target="../EEE.js" format="js"/>
+  <export target="../1.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" source="../tilesets/Main.tsx"/>
  <tileset firstgid="248" source="../tilesets/Decorations.tsx"/>
@@ -58,11 +58,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="Boxes and Door">
+ <objectgroup id="3" name="Misc">
   <object id="23" gid="291" x="149.369" y="384.81" width="44" height="32"/>
   <object id="24" gid="291" x="127.975" y="384.81" width="44" height="32"/>
   <object id="25" gid="291" x="138.672" y="354.058" width="44" height="32"/>
   <object id="27" x="376.247" y="604.412" height="1.51103"/>
-  <object id="29" gid="290" x="754" y="384" width="92" height="112"/>
+ </objectgroup>
+ <objectgroup id="6" name="Player and Door" visible="0">
+  <object id="30" gid="292" x="142" y="270" width="64" height="64"/>
+  <object id="33" gid="290" x="750" y="384" width="92" height="112"/>
  </objectgroup>
 </map>

@@ -52,7 +52,13 @@ export class IdleLeft extends PlayerState {
 
   handleInput (): void {
     const { inputHandler, player } = this.game
-    if (inputHandler.hasDirectionLeft()) {
+    if (inputHandler.hasDirectionUp()) {
+      if (inputHandler.hasDirectionRight()) {
+        player.setState(EPlayerState.jumpRight)
+      } else {
+        player.setState(EPlayerState.jumpLeft)
+      }
+    } else if (inputHandler.hasDirectionLeft()) {
       player.setState(EPlayerState.runLeft)
     } else if (inputHandler.hasDirectionRight()) {
       player.setState(EPlayerState.runRight)
@@ -72,7 +78,13 @@ export class IdleRight extends PlayerState {
 
   handleInput (): void {
     const { inputHandler, player } = this.game
-    if (inputHandler.hasDirectionLeft()) {
+    if (inputHandler.hasDirectionUp()) {
+      if (inputHandler.hasDirectionLeft()) {
+        player.setState(EPlayerState.jumpLeft)
+      } else {
+        player.setState(EPlayerState.jumpRight)
+      }
+    } else if (inputHandler.hasDirectionLeft()) {
       player.setState(EPlayerState.runLeft)
     } else if (inputHandler.hasDirectionRight()) {
       player.setState(EPlayerState.runRight)
@@ -93,7 +105,15 @@ export class RunLeft extends PlayerState {
   handleInput (): void {
     const { inputHandler, player } = this.game
     if (inputHandler.hasDirectionUp()) {
-      player.setState(EPlayerState.jumpLeft)
+      if (inputHandler.hasDirectionRight()) {
+        player.setState(EPlayerState.jumpRight)
+      } else {
+        player.setState(EPlayerState.jumpLeft)
+      }
+    } else if (inputHandler.hasDirectionRight()) {
+      player.setState(EPlayerState.runRight)
+    } else if (!inputHandler.hasDirectionLeft()) {
+      player.setState(EPlayerState.idleLeft)
     }
   }
 }
@@ -111,7 +131,15 @@ export class RunRight extends PlayerState {
   handleInput (): void {
     const { inputHandler, player } = this.game
     if (inputHandler.hasDirectionUp()) {
-      player.setState(EPlayerState.jumpRight)
+      if (inputHandler.hasDirectionLeft()) {
+        player.setState(EPlayerState.jumpLeft)
+      } else {
+        player.setState(EPlayerState.jumpRight)
+      }
+    } else if (inputHandler.hasDirectionLeft()) {
+      player.setState(EPlayerState.runLeft)
+    } else if (!inputHandler.hasDirectionRight()) {
+      player.setState(EPlayerState.idleRight)
     }
   }
 }
