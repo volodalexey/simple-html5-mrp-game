@@ -249,6 +249,12 @@ export class Player extends Container {
     } else {
       this.frameTimer += deltaMS
     }
+
+    if (isEnterDoor) {
+      this.game.doors.children.forEach(door => {
+        door.handleUpdate(deltaMS)
+      })
+    }
   }
 
   restart (): void {
