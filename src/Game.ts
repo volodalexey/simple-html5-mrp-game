@@ -28,7 +28,7 @@ export class Game extends Container {
 
   static options = {
     startLevel: 1,
-    maxTime: 20000
+    maxTime: 25000
   }
 
   public currentLevel = Game.options.startLevel
@@ -54,6 +54,8 @@ export class Game extends Container {
 
     this.statusBar.position.set(this.width / 2 - this.statusBar.width, this.level.y)
     this.startModal.position.set(this.width / 2 - this.startModal.width / 2, this.height / 2 - this.startModal.height / 2)
+    this.overlay.width = this.width
+    this.overlay.height = this.height
 
     setTimeout(() => {
       void this.level.idleLoad().catch(console.error)
@@ -164,8 +166,6 @@ export class Game extends Container {
     logLayout(`x=${x} y=${y} w=${this.width} h=${this.height}`)
     this.overlay.visible = true
     this.statusBar.visible = true
-    this.overlay.width = this.width
-    this.overlay.height = this.height
   }
 
   handleUpdate (deltaMS: number): void {
