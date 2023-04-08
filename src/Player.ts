@@ -145,10 +145,12 @@ export class Player extends Container {
     this.runRightAnimation = runRightAnimation
 
     const enterDoorLeftAnimation = new AnimatedSprite(enterDoorLeftTextures)
+    enterDoorLeftAnimation.loop = false
     spritesContainer.addChild(enterDoorLeftAnimation)
     this.enterDoorLeftAnimation = enterDoorLeftAnimation
 
     const enterDoorRightAnimation = new AnimatedSprite(enterDoorRightTextures)
+    enterDoorRightAnimation.loop = false
     spritesContainer.addChild(enterDoorRightAnimation)
     this.enterDoorRightAnimation = enterDoorRightAnimation
   }
@@ -238,11 +240,11 @@ export class Player extends Container {
       this.frameTimer = 0
       if (this.currentAnimation.currentFrame < this.currentAnimation.totalFrames - 1) {
         this.currentAnimation.currentFrame++
-      } else {
+      } else if (this.currentAnimation.loop) {
         this.currentAnimation.currentFrame = 0
       }
-      if (isEnterDoor && this.currentAnimation.currentFrame < this.currentAnimation.totalFrames - 1) {
-        this.game.runLevel(true)
+      if (isEnterDoor && this.currentAnimation.currentFrame >= 0 && !this.game.transitionToOverlay) {
+        this.game.transitionToOverlay = true
       }
     } else {
       this.frameTimer += deltaMS

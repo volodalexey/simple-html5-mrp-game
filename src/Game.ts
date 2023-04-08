@@ -1,4 +1,4 @@
-import { Container, type Texture } from 'pixi.js'
+import { Container, Graphics, type Texture } from 'pixi.js'
 import { Level } from './Level'
 import { type IPlayerOptions, Player } from './Player'
 import { StatusBar } from './StatusBar'
@@ -23,6 +23,8 @@ export interface IGameOptions {
 export class Game extends Container {
   public gameEnded = false
   public time = 0
+  public transitionToOverlay = false
+  public transitionToLevel = false
 
   static options = {
     startLevel: 1,
@@ -38,6 +40,7 @@ export class Game extends Container {
   public startModal!: StartModal
   public collisionBlocks = new Container<CollisionBlock>()
   public doors = new Container<Door>()
+  public overlay = new Graphics()
   constructor (options: IGameOptions) {
     super()
 
@@ -48,6 +51,9 @@ export class Game extends Container {
     this.addEventLesteners()
 
     this.runLevel()
+
+    this.statusBar.position.set(this.width / 2 - this.statusBar.width, this.level.y)
+    this.startModal.position.set(this.width / 2 - this.startModal.width / 2, this.height / 2 - this.startModal.height / 2)
 
     setTimeout(() => {
       void this.level.idleLoad().catch(console.error)
@@ -67,7 +73,6 @@ export class Game extends Container {
 
     this.statusBar = new StatusBar()
     this.addChild(this.statusBar)
-    this.statusBar.position.set(viewWidth / 2 - this.statusBar.width / 2, 0)
 
     this.addChild(this.collisionBlocks)
     this.addChild(this.doors)
@@ -76,6 +81,12 @@ export class Game extends Container {
     this.addChild(this.player)
 
     this.inputHandler = new InputHandler({ eventTarget: this, relativeToTarget: this.player })
+
+    this.overlay.beginFill(0x000000)
+    this.overlay.drawRect(0, 0, this.width, this.height)
+    this.overlay.endFill()
+    this.overlay.alpha = 0
+    this.addChild(this.overlay)
 
     this.startModal = new StartModal({ viewWidth, viewHeight })
     this.startModal.visible = false
@@ -104,6 +115,9 @@ export class Game extends Container {
     this.currentLevel = Game.options.startLevel
     this.cleanFromAll()
     this.runLevel()
+    this.transitionToOverlay = false
+    this.transitionToLevel = false
+    this.overlay.alpha = 0
   }
 
   endGame (): void {
@@ -141,16 +155,22 @@ export class Game extends Container {
     const x = availableWidth > occupiedWidth ? (availableWidth - occupiedWidth) / 2 : 0
     const y = availableHeight > occupiedHeight ? (availableHeight - occupiedHeight) / 2 : 0
     logLayout(`aw=${availableWidth} (ow=${occupiedWidth}) x=${x} ah=${availableHeight} (oh=${occupiedHeight}) y=${y}`)
+    this.overlay.visible = false
+    this.statusBar.visible = false
     this.x = x
     this.width = occupiedWidth
     this.y = y
     this.height = occupiedHeight
     logLayout(`x=${x} y=${y} w=${this.width} h=${this.height}`)
-    this.startModal.position.set(this.level.width / 2 - this.startModal.width / 2, this.level.height / 2 - this.startModal.height / 2)
+    this.overlay.visible = true
+    this.statusBar.visible = true
+    this.overlay.width = this.width
+    this.overlay.height = this.height
   }
 
   handleUpdate (deltaMS: number): void {
     if (this.gameEnded) {
+      this.handleTransition(false)
       return
     }
     this.time += deltaMS
@@ -159,6 +179,36 @@ export class Game extends Container {
       this.endGame()
     }
     this.player.handleUpdate(deltaMS)
+    this.handleTransition(true)
+  }
+
+  handleTransition (runLevel = false): void {
+    if (this.transitionToOverlay) {
+      if (this.overlay.alpha < 0.9) {
+        this.overlay.alpha += 0.01
+      } else {
+        this.overlay.alpha = 1
+        if (runLevel) {
+          this.runLevel(true)
+        }
+      }
+    }
+    if (this.transitionToLevel) {
+      if (this.overlay.alpha > 0.1) {
+        this.overlay.alpha -= 0.01
+      } else {
+        this.overlay.alpha = 0
+        this.transitionToOverlay = false
+        this.transitionToLevel = false
+      }
+    }
+  }
+
+  completeTransition (): void {
+    if (this.transitionToOverlay) {
+      this.transitionToOverlay = false
+      this.transitionToLevel = true
+    }
   }
 
   runLevel (increment?: boolean): void {
@@ -167,6 +217,7 @@ export class Game extends Container {
     }
     if (this.currentLevel > 3) {
       this.endGame()
+      this.completeTransition()
       return
     }
     this.cleanFromAll()
@@ -189,5 +240,7 @@ export class Game extends Container {
     this.doors.addChild(door)
 
     this.statusBar.updateLevel(this.currentLevel)
+
+    this.completeTransition()
   }
 }
